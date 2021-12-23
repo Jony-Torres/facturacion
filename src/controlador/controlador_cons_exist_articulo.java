@@ -163,7 +163,7 @@ public class controlador_cons_exist_articulo extends FORMCOEXAR implements Actio
         model.addColumn("Lote");
         model.addColumn("Desc Articulo");
         model.addColumn("Exist");
-        int[] anchos = {20,70,20,170,70,20,60,300,20};
+        int[] anchos = {20,70,20,160,100,20,40,300,20};
         for (int i = 0; i < tbl_exist_articulo.getColumnCount(); i++) {
             tbl_exist_articulo.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }

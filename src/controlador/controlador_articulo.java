@@ -129,7 +129,7 @@ public class controlador_articulo extends FORMARTICU implements ActionListener,K
         model.addColumn("Lote");
         model.addColumn("Articulo");
         model.addColumn("Estado");
-        int[] anchos = {70,50,70,400,80};
+        int[] anchos = {100,40,50,450,70};
         for (int i = 0; i < tbl_articulo.getColumnCount(); i++) {
             tbl_articulo.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }

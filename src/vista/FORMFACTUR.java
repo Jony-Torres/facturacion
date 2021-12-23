@@ -956,6 +956,11 @@ public class FORMFACTUR extends javax.swing.JFrame {
         jLabel32.setText("(F9 Busq)");
 
         txt_descuento.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txt_descuento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_descuentoKeyTyped(evt);
+            }
+        });
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel34.setText("Descuento:");
@@ -1517,6 +1522,20 @@ public class FORMFACTUR extends javax.swing.JFrame {
     private void txt_precio_unitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_precio_unitarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_precio_unitarioActionPerformed
+
+    private void txt_descuentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descuentoKeyTyped
+        char tecla;
+        int num = 15;
+        tecla = evt.getKeyChar();
+        //Validacion de solo numero o decimales
+        if(((tecla < '0') || (tecla > '9')) && (tecla != KeyEvent.VK_BACK_SPACE) && (tecla !='.')){
+            evt.consume();
+            getToolkit().beep();
+        }
+        if (txt_descuento.getText().length() >= num) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_descuentoKeyTyped
 
     /**
      * @param args the command line arguments

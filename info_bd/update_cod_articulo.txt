@@ -1,0 +1,3 @@
+UPDATE articulo 
+SET cod_articulo = SUBSTRING(cod_articulo,2,LENGTH(cod_articulo))
+WHERE cod_articulo IS NOT NULL;

@@ -427,49 +427,36 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
             }
         }
         //
-        if(e.getSource()== vistaFactura_ven.txt_cantidad){
-            if (vistaFactura_ven.txt_cantidad.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Campo Obligatorio", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                vistaFactura_ven.txt_cantidad.requestFocus();
-            } else if (Integer.parseInt(vistaFactura_ven.txt_cantidad.getText()) == 0) {
-                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero VERIFIQUE", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                return;
-            } else {
-                //vistaFactura_ven.txt_precio_unitario.requestFocus();
+        if (e.getSource() == vistaFactura_ven.txt_cantidad) {
+            boolean respuesta;
+            respuesta = validar_cantidad();
+            if (respuesta == true) {
                 if (act_prec.equals("S")) {
                     vistaFactura_ven.txt_precio_unitario.requestFocus();
                 } else if (act_dto.equals("S")) {
                     vistaFactura_ven.txt_descuento.requestFocus();
-                    
                 } else {
                     valida_codigo_articulo();
-                        boolean result;
-                        result = valida_exisartic_detalle(vistaFactura_ven.txt_cod_prod_busq.getText(), vistaFactura_ven.txt_cod_un_med.getText(), vistaFactura_ven.txt_nro_lote.getText());
-                        if (result == true) {
-                            JOptionPane.showMessageDialog(null, "Este prodcuto ya fue solicitado", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
-                            vistaFactura_ven.txt_cod_prod_busq.requestFocus();
-                        } else {
-                            agregar_detalle();
-                        }
+                    boolean result;
+                    result = valida_exisartic_detalle(vistaFactura_ven.txt_cod_prod_busq.getText(), vistaFactura_ven.txt_cod_un_med.getText(), vistaFactura_ven.txt_nro_lote.getText());
+                    if (result == true) {
+                        add_articulo_exis_detalle(vistaFactura_ven.txt_cod_prod_busq.getText(), vistaFactura_ven.txt_cod_un_med.getText(), vistaFactura_ven.txt_nro_lote.getText());
+                    } else {
+                        agregar_detalle(0);
+                    }
                 }
+            }else{
+                //vistaFactura_ven.txt_cantidad.requestFocus();
+                return;
             }
         }
         //
         if (e.getSource() == vistaFactura_ven.txt_precio_unitario) {
-            if (vistaFactura_ven.txt_precio_unitario.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Campo Obligatorio debe Ingresar el Precio para continuar", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                vistaFactura_ven.txt_precio_unitario.requestFocus();
-            } else if (Integer.parseInt(vistaFactura_ven.txt_precio_unitario.getText()) == 0) {
-                JOptionPane.showMessageDialog(this, "El precio debe ser mayor a cero VERIFIQUE", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                return;
-            } else {
-                if (vistaFactura_ven.txt_cantidad.getText().equals("")) {
-                    JOptionPane.showMessageDialog(this, "Debe ingresar la cantidad para continuar", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                    vistaFactura_ven.txt_cantidad.requestFocus();
-                } else if (Integer.parseInt(vistaFactura_ven.txt_cantidad.getText()) == 0) {
-                    JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero VERIFIQUE", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                    return;
-                } else {
+            boolean rpt_precio, rpt_cantidad;
+            rpt_precio = validar_precio();
+            if (rpt_precio == true) {
+                rpt_cantidad = validar_cantidad();
+                if (rpt_cantidad == true) {
                     if (act_dto.equals("S")) {
                         vistaFactura_ven.txt_descuento.requestFocus();
                     } else {
@@ -477,39 +464,46 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
                         boolean result;
                         result = valida_exisartic_detalle(vistaFactura_ven.txt_cod_prod_busq.getText(), vistaFactura_ven.txt_cod_un_med.getText(), vistaFactura_ven.txt_nro_lote.getText());
                         if (result == true) {
-                            JOptionPane.showMessageDialog(null, "Este prodcuto ya fue solicitado", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
-                            vistaFactura_ven.txt_cod_prod_busq.requestFocus();
+                            add_articulo_exis_detalle(vistaFactura_ven.txt_cod_prod_busq.getText(), vistaFactura_ven.txt_cod_un_med.getText(), vistaFactura_ven.txt_nro_lote.getText());
                         } else {
-                            agregar_detalle();
+                            agregar_detalle(0);
                         }
-
                     }
+                } else {
+                    return;
                 }
+            } else {
+                return;
             }
         }
         //
         if (e.getSource() == vistaFactura_ven.txt_descuento) {
-            if (vistaFactura_ven.txt_cantidad.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar la cantidad para continuar", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                vistaFactura_ven.txt_cantidad.requestFocus();
-            } else if (Integer.parseInt(vistaFactura_ven.txt_cantidad.getText()) == 0) {
-                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero VERIFIQUE", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                return;
-            } else {
-                valida_codigo_articulo();
-                boolean result;
-                result = valida_exisartic_detalle(vistaFactura_ven.txt_cod_prod_busq.getText(), vistaFactura_ven.txt_cod_un_med.getText(), vistaFactura_ven.txt_nro_lote.getText());
-                if (result == true) {
-                    JOptionPane.showMessageDialog(null, "Este prodcuto ya fue solicitado", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
-                    vistaFactura_ven.txt_cod_prod_busq.requestFocus();
+            boolean rpt_precio, rpt_cantidad;
+            rpt_precio = validar_precio();
+            if (rpt_precio == true) {
+                rpt_cantidad = validar_cantidad();
+                if (rpt_cantidad == true) {
+                    valida_codigo_articulo();
+                    boolean result;
+                    result = valida_exisartic_detalle(vistaFactura_ven.txt_cod_prod_busq.getText(), vistaFactura_ven.txt_cod_un_med.getText(), vistaFactura_ven.txt_nro_lote.getText());
+                    if (result == true) {
+                        add_articulo_exis_detalle(vistaFactura_ven.txt_cod_prod_busq.getText(), vistaFactura_ven.txt_cod_un_med.getText(), vistaFactura_ven.txt_nro_lote.getText());
+                    } else {
+                        agregar_detalle(0);
+                    }
                 } else {
-                    agregar_detalle();
+                    return;
                 }
+            } else {
+                return;
             }
         }
         //
         if (e.getSource() == vistaFactura_ven.btn_limpiar) {
-            quitar_articulo();
+            int opc = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar el registro del detalle?", "Mensaje Del Sistema", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opc == JOptionPane.YES_OPTION) {
+                quitar_articulo();
+            }
         }
         //
         if(e.getSource()== vistaFactura_ven.btn_guardar){
@@ -945,7 +939,7 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
         model.addColumn("Lote");
         model.addColumn("Cant");
         model.addColumn("Descripcion");
-        int[] anchos = {80,40,40,40,300};
+        int[] anchos = {100,35,35,35,300};
         for (int i = 0; i < tbl_busq_articulo.getColumnCount(); i++) {
             tbl_busq_articulo.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
@@ -995,7 +989,7 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
         }
         return exis; 
     }
-    private void agregar_detalle() {
+    private void agregar_detalle(double p_cant) {
         String codpr,
                 codun,
                 nrolot,
@@ -1028,18 +1022,24 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
                 codun = vistaFactura_ven.txt_cod_un_med.getText();
                 nrolot = vistaFactura_ven.txt_nro_lote.getText();
                 descpr = vistaFactura_ven.txt_desc_prod_busq.getText();
-                cantpr = Double.parseDouble(vistaFactura_ven.txt_cantidad.getText());
+                //p_cant por si el usuario vuelva a ingresar el mismo articulo y se requiera agregar a la cantidad anterior
+                cantpr = Double.parseDouble(vistaFactura_ven.txt_cantidad.getText())+p_cant;
                 //System.out.println("Cantidad1: "+ cantpr+"textbox: "+ vistaFactura_ven.txt_cantidad.getText());
                 precio = Double.parseDouble(vistaFactura_ven.txt_precio_unitario.getText());
-                if (vistaFactura_ven.txt_descuento.getText() != null && vistaFactura_ven.txt_descuento.getText().compareToIgnoreCase("") != 0) {
-                    if (Double.parseDouble(vistaFactura_ven.txt_descuento.getText()) >= Double.parseDouble(vistaFactura_ven.txt_precio_unitario.getText())) {
-                        JOptionPane.showMessageDialog(this, "El monto del descuento no puede ser Mayor o Igual al precio de venta, VERIFIQUE!!!", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                        return;
-                    } else if (Double.parseDouble(vistaFactura_ven.txt_descuento.getText()) > 0.0) {
-                        descto = Double.parseDouble(vistaFactura_ven.txt_descuento.getText());
+                try {
+                    if (vistaFactura_ven.txt_descuento.getText() != null && vistaFactura_ven.txt_descuento.getText().compareToIgnoreCase("") != 0) {
+                        if (Double.parseDouble(vistaFactura_ven.txt_descuento.getText()) >= Double.parseDouble(vistaFactura_ven.txt_precio_unitario.getText())) {
+                            JOptionPane.showMessageDialog(this, "El monto del descuento no puede ser Mayor o Igual al precio de venta, VERIFIQUE!!!", "Abvertencia", JOptionPane.WARNING_MESSAGE);
+                            return;
+                        } else if (Double.parseDouble(vistaFactura_ven.txt_descuento.getText()) > 0.0) {
+                            descto = Double.parseDouble(vistaFactura_ven.txt_descuento.getText());
+                        }
+                    } else {
+                        descto = 0;
                     }
-                } else {
-                    descto = 0;
+                } catch (HeadlessException | NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al validar el Descuento, número no válido : " + vistaFactura_ven.txt_descuento.getText() + "  Verifique!!!", "Mensaje Del Sitema", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
                 prec = formatea.format(precio);
                 desc = formatea.format(descto);
@@ -2029,5 +2029,58 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
             vistaFactura_ven.txt_cod_un_med.setText("");
         }
     }
-    
+
+    private void add_articulo_exis_detalle(String cd,String un,String lo) {
+        int opc = JOptionPane.showConfirmDialog(null, "Este prodcuto ya fue solicitado anteriormente,Desea agregar más la siguiente cantidad " + Double.parseDouble(vistaFactura_ven.txt_cantidad.getText()), "Mensaje Del Sistema", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (opc == JOptionPane.YES_OPTION) {
+            double v_cantidad = 0.0;
+            for (int i = 0; i < vistaFactura_ven.tbl_comprobante.getRowCount(); i++) {
+                //System.out.println("valores: "+cd+" JTABLE: "+vistaFactura_ven.tbl_comprobante.getValueAt(i, 0));
+                if (vistaFactura_ven.tbl_comprobante.getValueAt(i, 0).equals(cd)&&vistaFactura_ven.tbl_comprobante.getValueAt(i, 1).equals(un)&&vistaFactura_ven.tbl_comprobante.getValueAt(i, 2).equals(lo)) {
+                    vistaFactura_ven.tbl_comprobante.changeSelection(i, 1, false, false);
+                    v_cantidad = Double.parseDouble(vistaFactura_ven.tbl_comprobante.getValueAt(i, 3).toString());
+                    break;
+                }
+            }
+            agregar_detalle(v_cantidad);
+            quitar_articulo();
+        }
+    }
+
+    private boolean validar_cantidad() {
+        boolean resp = false;
+        try {
+            if (vistaFactura_ven.txt_cantidad.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Campo Obligatorio", "Abvertencia", JOptionPane.WARNING_MESSAGE);
+                resp = false;
+            } else if (Integer.parseInt(vistaFactura_ven.txt_cantidad.getText()) == 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero VERIFIQUE", "Abvertencia", JOptionPane.WARNING_MESSAGE);
+                resp = false;
+            } else {
+                resp = true;
+            }
+        } catch (HeadlessException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error al validar la Cantidad, número no válido : " + vistaFactura_ven.txt_cantidad.getText() + "  Verifique!!!", "Mensaje Del Sitema", JOptionPane.ERROR_MESSAGE);
+            resp = false;
+        }
+        return resp;
+    }
+    private boolean validar_precio() {
+        boolean resp = false;
+        try {
+            if (vistaFactura_ven.txt_precio_unitario.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Campo Obligatorio debe Ingresar el Precio para continuar", "Abvertencia", JOptionPane.WARNING_MESSAGE);
+                resp = false;
+            } else if (Double.parseDouble(vistaFactura_ven.txt_precio_unitario.getText()) == 0.0) {
+                JOptionPane.showMessageDialog(this, "El precio debe ser mayor a cero VERIFIQUE", "Abvertencia", JOptionPane.WARNING_MESSAGE);
+                resp = false;
+            } else {
+                resp = true;
+            }
+        } catch (HeadlessException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error al validar el Precio, número no válido : " + vistaFactura_ven.txt_precio_unitario.getText() + "  Verifique!!!", "Mensaje Del Sitema", JOptionPane.ERROR_MESSAGE);
+            resp = false;
+        }
+        return resp;
+    }
 }

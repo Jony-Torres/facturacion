@@ -1,6 +1,7 @@
 package controlador;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -277,47 +278,51 @@ public class controlador_ajuste_stock extends FORMAJUSTK implements ActionListen
                 valida_codigo_articulo();
             }
         }
-        if(e.getSource()== vistaAjusStock.txt_cantidad){
-            if (vistaAjusStock.txt_cantidad.getText().equals(""))  {
-                 JOptionPane.showMessageDialog(this, "Debe ingresar la cantidad para continuar", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                 vistaAjusStock.txt_cantidad.requestFocus();
-            }else if(Integer.parseInt(vistaAjusStock.txt_cantidad.getText()) == 0){
-                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero VERIFIQUE", "Abvertencia", JOptionPane.WARNING_MESSAGE);
-                return;
-            }else{
-                if (tipo_transa == 4) { 
-                    //String res = modeloArticulo.retorna_desc_articulo(sucursal,vistaAjusStock.txt_cod_prod_busq.getText(),vistaAjusStock.txt_cod_deposito.getText(),vistaAjusStock.txt_cod_un_med.getText(),vistaAjusStock.txt_nro_lote.getText());
-                    String res = modeloArticulo.retorna_desc_articulo_COMP(vistaAjusStock.txt_cod_prod_busq.getText(),vistaAjusStock.txt_cod_un_med.getText(),vistaAjusStock.txt_nro_lote.getText());
-                    if(res!= null){
-                        boolean result;
-                        result = valida_exisartic_detalle(vistaAjusStock.txt_cod_prod_busq.getText(),vistaAjusStock.txt_cod_un_med.getText(),vistaAjusStock.txt_nro_lote.getText());
-                            if(result == true){
-                                JOptionPane.showMessageDialog(null,"Este prodcuto ya fue solicitado", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
+        if (e.getSource() == vistaAjusStock.txt_cantidad) {
+            try {
+                if (vistaAjusStock.txt_cantidad.getText().equals("")) {
+                    JOptionPane.showMessageDialog(this, "Debe ingresar la cantidad para continuar", "Abvertencia", JOptionPane.WARNING_MESSAGE);
+                    vistaAjusStock.txt_cantidad.requestFocus();
+                } else if (Integer.parseInt(vistaAjusStock.txt_cantidad.getText()) == 0) {
+                    JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero VERIFIQUE", "Abvertencia", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    if (tipo_transa == 4) {
+                        //String res = modeloArticulo.retorna_desc_articulo(sucursal,vistaAjusStock.txt_cod_prod_busq.getText(),vistaAjusStock.txt_cod_deposito.getText(),vistaAjusStock.txt_cod_un_med.getText(),vistaAjusStock.txt_nro_lote.getText());
+                        String res = modeloArticulo.retorna_desc_articulo_COMP(vistaAjusStock.txt_cod_prod_busq.getText(), vistaAjusStock.txt_cod_un_med.getText(), vistaAjusStock.txt_nro_lote.getText());
+                        if (res != null) {
+                            boolean result;
+                            result = valida_exisartic_detalle(vistaAjusStock.txt_cod_prod_busq.getText(), vistaAjusStock.txt_cod_un_med.getText(), vistaAjusStock.txt_nro_lote.getText());
+                            if (result == true) {
+                                JOptionPane.showMessageDialog(null, "Este prodcuto ya fue solicitado", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
                                 vistaAjusStock.txt_cod_prod_busq.requestFocus();
-                            }else{
+                            } else {
                                 agregar_detalle(tipo_transa);
                             }
-                    }else{
-                        JOptionPane.showMessageDialog(null,"Codigo de Articulo no valido FAVOR VERIFICAR", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
-                        vistaAjusStock.txt_cod_prod_busq.requestFocus();
-                    }
-                } else if (tipo_transa == 3) {
-                    String res = modeloArticulo.retorna_desc_articulo_COMP(vistaAjusStock.txt_cod_prod_busq.getText(),vistaAjusStock.txt_cod_un_med.getText(),vistaAjusStock.txt_nro_lote.getText());
-                    if(res!= null){
-                        boolean result;
-                        result = valida_exisartic_detalle(vistaAjusStock.txt_cod_prod_busq.getText(),vistaAjusStock.txt_cod_un_med.getText(),vistaAjusStock.txt_nro_lote.getText());
-                            if(result == true){
-                                JOptionPane.showMessageDialog(null,"Este prodcuto ya fue solicitado", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Codigo de Articulo no valido FAVOR VERIFICAR", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
+                            vistaAjusStock.txt_cod_prod_busq.requestFocus();
+                        }
+                    } else if (tipo_transa == 3) {
+                        String res = modeloArticulo.retorna_desc_articulo_COMP(vistaAjusStock.txt_cod_prod_busq.getText(), vistaAjusStock.txt_cod_un_med.getText(), vistaAjusStock.txt_nro_lote.getText());
+                        if (res != null) {
+                            boolean result;
+                            result = valida_exisartic_detalle(vistaAjusStock.txt_cod_prod_busq.getText(), vistaAjusStock.txt_cod_un_med.getText(), vistaAjusStock.txt_nro_lote.getText());
+                            if (result == true) {
+                                JOptionPane.showMessageDialog(null, "Este prodcuto ya fue solicitado", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
                                 vistaAjusStock.txt_cod_prod_busq.requestFocus();
-                            }else{
+                            } else {
                                 agregar_detalle(tipo_transa);
                             }
-                    }else{
-                        JOptionPane.showMessageDialog(null,"Codigo de Articulo no valido FAVOR VERIFICAR", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
-                        vistaAjusStock.txt_cod_prod_busq.requestFocus();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Codigo de Articulo no valido FAVOR VERIFICAR", "Mensaje Del Sitema", JOptionPane.WARNING_MESSAGE);
+                            vistaAjusStock.txt_cod_prod_busq.requestFocus();
+                        }
                     }
                 }
-             } 
+            } catch (HeadlessException | NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Error al validar la Cantidad, número no válido : " + vistaAjusStock.txt_cantidad.getText() + "  Verifique!!!", "Mensaje Del Sitema", JOptionPane.ERROR_MESSAGE);
+            }
         }
         //
         //
@@ -630,9 +635,10 @@ public class controlador_ajuste_stock extends FORMAJUSTK implements ActionListen
         model.addColumn("Codigo");
         model.addColumn("Unid");
         model.addColumn("Lote");
-        model.addColumn("Cant");
+        //model.addColumn("Cant");
         model.addColumn("Descripcion");
-        int[] anchos = {80,40,40,40,300};
+        //int[] anchos = {100,40,40,40,280};
+        int[] anchos = {100,40,40,300};
         for (int i = 0; i < tbl_busq_articulo.getColumnCount(); i++) {
             tbl_busq_articulo.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
@@ -643,8 +649,8 @@ public class controlador_ajuste_stock extends FORMAJUSTK implements ActionListen
             columna[0] = rpc.getCod_articulo();
             columna[1] = rpc.getCod_un_med();
             columna[2] = rpc.getNro_lote();
-            columna[3] = rpc.getCantidad();
-            columna[4] = rpc.getDesc_articulo();
+            //columna[3] = rpc.getCantidad();
+            columna[3] = rpc.getDesc_articulo();
             model.addRow(columna);
             }
         }
@@ -654,8 +660,8 @@ public class controlador_ajuste_stock extends FORMAJUSTK implements ActionListen
             columna[0] = rpc.getCod_articulo();
             columna[1] = rpc.getCod_un_med();
             columna[2] = rpc.getNro_lote();
-            columna[3] = rpc.getCantidad();
-            columna[4] = rpc.getDesc_articulo();
+            //columna[3] = rpc.getCantidad();
+            columna[3] = rpc.getDesc_articulo();
             model.addRow(columna);
             }
         }
@@ -665,8 +671,8 @@ public class controlador_ajuste_stock extends FORMAJUSTK implements ActionListen
             columna[0] = rpc.getCod_articulo();
             columna[1] = rpc.getCod_un_med();
             columna[2] = rpc.getNro_lote();
-            columna[3] = rpc.getCantidad();
-            columna[4] = rpc.getDesc_articulo();
+            //columna[3] = rpc.getCantidad();
+            columna[3] = rpc.getDesc_articulo();
             model.addRow(columna);
             }
         }
@@ -676,8 +682,8 @@ public class controlador_ajuste_stock extends FORMAJUSTK implements ActionListen
             columna[0] = rpc.getCod_articulo();
             columna[1] = rpc.getCod_un_med();
             columna[2] = rpc.getNro_lote();
-            columna[3] = rpc.getCantidad();
-            columna[4] = rpc.getDesc_articulo();
+            //columna[3] = rpc.getCantidad();
+            columna[3] = rpc.getDesc_articulo();
             model.addRow(columna);
             }
         }
@@ -691,7 +697,8 @@ public class controlador_ajuste_stock extends FORMAJUSTK implements ActionListen
             this.vistaAjusStock.txt_cod_prod_busq.setText(vistaAjusStock.tbl_busq_articulo.getValueAt(cod,0).toString());
             this.vistaAjusStock.txt_cod_un_med.setText(vistaAjusStock.tbl_busq_articulo.getValueAt(cod,1).toString());
             this.vistaAjusStock.txt_nro_lote.setText(vistaAjusStock.tbl_busq_articulo.getValueAt(cod,2).toString());
-            this.vistaAjusStock.txt_desc_prod_busq.setText(vistaAjusStock.tbl_busq_articulo.getValueAt(cod,4).toString());
+            //this.vistaAjusStock.txt_desc_prod_busq.setText(vistaAjusStock.tbl_busq_articulo.getValueAt(cod,4).toString());
+            this.vistaAjusStock.txt_desc_prod_busq.setText(vistaAjusStock.tbl_busq_articulo.getValueAt(cod,3).toString());
             this.vistaAjusStock.cerrar_ventana_articulo();
             vistaAjusStock.txt_cod_prod_busq.requestFocus();
         }
