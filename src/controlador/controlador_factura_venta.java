@@ -70,6 +70,7 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
     String permiso  = null;
     String act_prec = null;
     String act_dto  = null;
+    String btn_del  = null;
     //
     static double total;
     double subtotal,iva,dto;
@@ -169,6 +170,12 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
         this.permiso = modeloPerm.retorna_permiso_grupo(gp,mod,form);
         this.act_dto = modeloPerm.retorna_acc_prog_us(sucursal,form,usuario,"COLUM_DESCUENTO");
         this.act_prec = modeloPerm.retorna_acc_prog_us(sucursal,form,usuario,"COLUM_PRECIO");
+        this.btn_del = modeloPerm.retorna_acc_prog_us(sucursal,form,usuario,"BTN_DELETE");
+        if (btn_del.equals("S")) {
+            vistaFactura_ven.btn_eliminar.setVisible(true);
+        } else {
+            vistaFactura_ven.btn_eliminar.setVisible(false);
+        }
         insert = permiso.substring(0,1);
         update = permiso.substring(1,2);
         delete = permiso.substring(2,3);
@@ -1537,11 +1544,11 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
                 //
                 JasperPrint informe = JasperFillManager.fillReport(ruta_informe, parametros, con.conectar_bd());
                 //Para imprimir con vista previa
-                //JasperViewer ventanavisor = new JasperViewer(informe, false);
-                //ventanavisor.setTitle("Comprobante Venta");
-                //ventanavisor.setVisible(true);
+                JasperViewer ventanavisor = new JasperViewer(informe, false);
+                ventanavisor.setTitle("Comprobante Venta");
+                ventanavisor.setVisible(true);
 
-                JasperPrintManager.printReport(informe, false);//Imprime directo a la impresora predeterminada de la pc
+                //JasperPrintManager.printReport(informe, false);//Imprime directo a la impresora predeterminada de la pc
                 resp = true;
             } catch (HeadlessException ex) {
                 JOptionPane.showMessageDialog(null, ex);

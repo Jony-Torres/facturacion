@@ -328,7 +328,7 @@ public class controlador_cons_comp_venta extends FORMCNCMVE implements ActionLis
         model.addColumn("Iva 10%");
         model.addColumn("Grav 5%");
         model.addColumn("Grav 10%");
-        int[] anchos = {50,40,300,80,80,80,80,80,80};
+        int[] anchos = {100,30,280,70,70,70,70,70,70};
         for (int i = 0; i < tbl_det_comp.getColumnCount(); i++) {
             tbl_det_comp.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }

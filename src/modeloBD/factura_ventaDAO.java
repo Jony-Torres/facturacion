@@ -162,7 +162,8 @@ public class factura_ventaDAO {
             if(nufa>0){
                 rpta="Eliminacion exitosa.";
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar el comprobante de ajuste: "+e);
         }
         return rpta;
     }

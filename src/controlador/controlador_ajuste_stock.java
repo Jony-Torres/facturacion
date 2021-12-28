@@ -53,6 +53,7 @@ public class controlador_ajuste_stock extends FORMAJUSTK implements ActionListen
     String query    = null;
     String permiso  = null;
     Integer tipo_transa = null;
+    String btn_del  = null;
     FORMAJUSTK vistaAjusStock = new FORMAJUSTK();
     ajuste_stockDAO   modeloAjusStock = new ajuste_stockDAO();
     permiso_grupoDAO modeloPerm = new permiso_grupoDAO();
@@ -110,6 +111,12 @@ public class controlador_ajuste_stock extends FORMAJUSTK implements ActionListen
         this.sucursal = suc;
         this.grupo = gp;
         this.permiso = modeloPerm.retorna_permiso_grupo(gp,mod,form);
+        this.btn_del = modeloPerm.retorna_acc_prog_us(sucursal,form,usuario,"BTN_DELETE");
+        if (btn_del.equals("S")) {
+            vistaAjusStock.btn_eliminar.setVisible(true);
+        } else {
+            vistaAjusStock.btn_eliminar.setVisible(false);
+        }
         insert = permiso.substring(0,1);
         update = permiso.substring(1,2);
         delete = permiso.substring(2,3);
