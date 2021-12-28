@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RECIBOMAST" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30a28692-736a-44dd-96ee-90e14de5bafa">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mysql"/>
+	<parameter name="P_NRO_RECIBO" class="java.lang.Integer"/>
+	<parameter name="P_TOTAL_NUM" class="java.lang.Double"/>
+	<parameter name="P_TOTAL_LET" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT DISTINCT 
+	r.cod_cliente,
+	r.nomb_cliente,
+	r.total_recibo,
+	c.ref_comprob,
+	c.saldo_cuota
+FROM view_recibo_venta r,
+      view_saldo_cliente c
+WHERE r.tipo_comprobante_ref = c.tipo_comprobante
+	AND r.ser_comprobante_ref = c.ser_comprobante
+	AND r.nro_comprobante_ref = c.nro_comprobante
+	AND r.nro_recibo =  $P{P_NRO_RECIBO}]]>
+	</queryString>
+	<field name="cod_cliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cod_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recibo_venta_cabecera"/>
+	</field>
+	<field name="nomb_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nomb_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="persona"/>
+	</field>
+	<field name="total_recibo" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="total_recibo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recibo_venta_cabecera"/>
+	</field>
+	<field name="ref_comprob" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ref_comprob"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="saldo_cliente"/>
+	</field>
+	<field name="saldo_cuota" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="saldo_cuota"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="saldo_cliente"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="360" y="15" width="150" height="20" uuid="6c0aa3b3-e38e-44e3-b755-d896a1b89a7d"/>
+				<textElement>
+					<font fontName="Calibri" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECIBO DE DINERO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="443" y="45" width="20" height="20" uuid="a805316a-ce48-4a2b-a9d7-91e297400865"/>
+				<textElement>
+					<font fontName="Calibri" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Gs.]]></text>
+			</staticText>
+			<textField pattern="###,###,###,###.##">
+				<reportElement x="463" y="45" width="65" height="20" uuid="82a0c2d9-c28a-4a35-8b3a-926fc911848e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_TOTAL_NUM}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="12" width="170" height="83" uuid="b0521719-3cee-41f2-8673-7e91fdc19fc5"/>
+				<imageExpression><![CDATA["Imagenes\\logo_la_panaderia.png"]]></imageExpression>
+			</image>
+			<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
+				<reportElement x="287" y="75" width="200" height="18" uuid="d7fdc998-ff06-4ff8-93e5-edee5ce67f1b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="235" y="75" width="50" height="18" uuid="bd068f92-083f-4d67-acc8-3541c326afe5"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Aregúa]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="3" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="168" splitType="Stretch">
+			<textField>
+				<reportElement x="135" y="10" width="300" height="18" uuid="2078ba6b-4f2a-447a-8ed4-a823087ec82d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee76193b-b397-4714-a046-89270f4e51c3"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomb_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="10" width="125" height="18" uuid="bd01a6f7-7629-4e95-be59-161bfe3c8069"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[Recibimos del Señor/a: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="40" width="130" height="18" uuid="059d0f2c-df3f-4a3d-bbe1-db61befeacf6"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[La cantidad de guaraníes: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="140" y="40" width="300" height="18" uuid="24558c23-63fc-45ee-82fc-563f3d6183eb"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_TOTAL_LET}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="68" width="220" height="18" uuid="35605598-4339-429f-8d94-4ca2641f4863"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[En concepto de pago de cuotas. Cliente Nº: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="230" y="68" width="30" height="18" uuid="36c9f432-925e-4a3d-8805-1ea143a63f91">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3fccf7d0-a8b7-4b8d-8561-ab29ea0c2328"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="260" y="68" width="75" height="18" uuid="eb72810a-fa34-4eeb-9310-10c31151f1b6"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[referencia Nº: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="335" y="68" width="200" height="18" uuid="f62a1eaf-714b-4721-8102-5019217654cc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="887dc41a-41e4-4c81-bb6d-033e3093e5d5"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ref_comprob}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="95" width="50" height="18" uuid="25dbd463-02f3-4c62-969d-4411cbf1ee08"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[Saldo Gs. ]]></text>
+			</staticText>
+			<textField pattern="###,###,###,###.##">
+				<reportElement x="60" y="95" width="65" height="18" uuid="7a63f07f-6075-41e6-b1ce-40428c84218c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="17d501cc-fa4a-422f-8b99-d4d8557cecc1"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_cuota}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="406" y="140" width="70" height="18" uuid="14e81a91-bdc3-48eb-8987-9a5c504ae832"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[Firma]]></text>
+			</staticText>
+			<line>
+				<reportElement x="360" y="139" width="150" height="1" uuid="9f17fd09-1074-4d88-b994-3ed05b4dd5d7"/>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="218" splitType="Stretch">
+			<subreport>
+				<reportElement x="5" y="80" width="545" height="100" uuid="ad380f6c-284d-4680-a42c-c2109db4b83a"/>
+				<subreportParameter name="P_NRO_RECIBO">
+					<subreportParameterExpression><![CDATA[$P{P_NRO_RECIBO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TOTAL_NUM">
+					<subreportParameterExpression><![CDATA[$P{P_TOTAL_NUM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TOTAL_LET">
+					<subreportParameterExpression><![CDATA[$P{P_TOTAL_LET}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["RECIBODUPL.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>
