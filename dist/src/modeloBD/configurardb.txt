@@ -1,7 +1,0 @@
-databaseclass=alenha_carbon.modeloBD.conexion
-jdbc=jdbc:mysql://
-driver=com.mysql.jdbc.Driver
-host=localhost
-database=alenha_carbon
-username=root
-password=
