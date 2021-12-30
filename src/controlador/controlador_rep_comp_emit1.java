@@ -64,7 +64,7 @@ public class controlador_rep_comp_emit1 extends REPCOMPEM1 implements ActionList
         if (e.getSource() == vistaRep_comp_em1.btn_ejecutar) {
                 imprimir_comprobantes();
         }
-        //pRUEBA
+        //Jony 30/12/2021
         if(e.getSource()== vistaRep_comp_em1.txt_cod_cliente){
             if (vistaRep_comp_em1.txt_cod_cliente.getText().equals("")) {
                 vistaRep_comp_em1.txt_desc_cliente.setText("TODOS");
