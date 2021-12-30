@@ -153,7 +153,7 @@ public class controlador_rep_comp_emit1 extends REPCOMPEM1 implements ActionList
                 SimpleDateFormat formatofecha=new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     //String ruta_informe="src\\reportes\\rep_sal_cli1.jasper";//PARA WINDOWS
-                    String ruta_informe="src//reportes//REPCOMPEMI.jasper";//PARA LINUX
+                    String ruta_informe="src//reportes//REPCOMPEM1.jasper";//PARA LINUX
                     Map parametros = new HashMap();
                     if (vistaRep_comp_em1.txt_cod_sucursal.getText().equals("")) {
                         parametros.put("P_COD_SUCURSAL",null);
