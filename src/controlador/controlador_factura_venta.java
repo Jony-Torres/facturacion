@@ -1054,6 +1054,7 @@ public class controlador_factura_venta extends FORMFACTUR implements ActionListe
                 String man_st = modeloArticulo.verifica_ctrl_stock(codpr, nrolot, codun);
                 if (man_st.equals("S")) {
                     stk = modeloArticulo.retorna_cant_disp_stock(sucursal, vistaFactura_ven.txt_cod_deposito.getText(), vistaFactura_ven.txt_cod_prod_busq.getText(), codun, nrolot);
+                    //System.out.println("Valor: "+stk);
                     if (stk >= cantpr) {
                         importe = ((precio * cantpr) - descto);
                         //CALCULO PARA EL IVA 5%

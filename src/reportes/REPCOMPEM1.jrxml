@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REPCOMPEM1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b54b7349-1429-4687-bc6c-816915aac741">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="alenha_carbon.xml"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="fact"/>
 	<parameter name="P_COD_SUCURSAL" class="java.lang.String"/>
 	<parameter name="P_FECHA_COMP_DESDE" class="java.lang.String"/>
 	<parameter name="P_FECHA_COMP_HASTA" class="java.lang.String"/>
 	<parameter name="P_COD_CLIENTE" class="java.lang.Integer"/>
-	<parameter name="P_TIPO_COMP" class="java.lang.String"/>
+	<parameter name="P_COD_USUARIO" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT v.cod_sucursal,
        v.desc_sucursal,
@@ -17,6 +17,7 @@
        v.nro_comprobante,
        v.fecha_comprobante,
        v.fec_comp,
+       v.usuario,
        v.cod_cliente,
        v.nombre_cliente,
        v.cod_condicion_venta,
@@ -31,7 +32,7 @@ FROM view_comprob_venta_cab_det v
 WHERE (v.cod_sucursal= $P{P_COD_SUCURSAL}  OR $P{P_COD_SUCURSAL}  IS NULL)
        AND (v.cod_cliente= $P{P_COD_CLIENTE}  OR $P{P_COD_CLIENTE} IS NULL)
        AND ((v.fec_comp >= $P{P_FECHA_COMP_DESDE} OR $P{P_FECHA_COMP_DESDE} IS NULL) AND (v.fec_comp <= $P{P_FECHA_COMP_HASTA} OR $P{P_FECHA_COMP_HASTA} IS NULL))
-       AND (v.tipo_comprobante= $P{P_TIPO_COMP}  OR $P{P_TIPO_COMP} IS NULL)
+       AND (v.usuario= $P{P_COD_USUARIO}  OR $P{P_COD_USUARIO} IS NULL)
 GROUP BY v.cod_sucursal,
 	v.desc_sucursal,
 	v.tipo_comprobante,
@@ -39,88 +40,106 @@ GROUP BY v.cod_sucursal,
 	v.nro_comprobante,
 	v.fecha_comprobante,
 	v.fec_comp,
+	v.usuario,
 	v.cod_cliente,
 	v.nombre_cliente,
 	v.cod_condicion_venta,
 	v.descripcion,
 	v.cod_moneda,
 	v.desc_moneda
-ORDER BY 1,3,5,6,8,9]]>
+ORDER BY 1,10,9,8,4]]>
 	</queryString>
 	<field name="cod_sucursal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cod_sucursal"/>
 		<property name="com.jaspersoft.studio.field.label" value="cod_sucursal"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
 	</field>
 	<field name="desc_sucursal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="desc_sucursal"/>
 		<property name="com.jaspersoft.studio.field.label" value="desc_sucursal"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sucursal"/>
 	</field>
 	<field name="tipo_comprobante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo_comprobante"/>
 		<property name="com.jaspersoft.studio.field.label" value="tipo_comprobante"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="view_comprob_venta_cab_det"/>
 	</field>
 	<field name="grupo_comp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="grupo_comp"/>
 		<property name="com.jaspersoft.studio.field.label" value="grupo_comp"/>
 	</field>
 	<field name="ser_comprobante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ser_comprobante"/>
 		<property name="com.jaspersoft.studio.field.label" value="ser_comprobante"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
 	</field>
 	<field name="nro_comprobante" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nro_comprobante"/>
 		<property name="com.jaspersoft.studio.field.label" value="nro_comprobante"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
 	</field>
 	<field name="fecha_comprobante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_comprobante"/>
 		<property name="com.jaspersoft.studio.field.label" value="fecha_comprobante"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="view_comprob_venta_cab_det"/>
 	</field>
 	<field name="fec_comp" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fec_comp"/>
 		<property name="com.jaspersoft.studio.field.label" value="fec_comp"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
 	</field>
+	<field name="usuario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="usuario"/>
+		<property name="com.jaspersoft.studio.field.label" value="usuario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="cod_cliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cod_cliente"/>
 		<property name="com.jaspersoft.studio.field.label" value="cod_cliente"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
 	</field>
 	<field name="nombre_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_cliente"/>
 		<property name="com.jaspersoft.studio.field.label" value="nombre_cliente"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="persona"/>
 	</field>
 	<field name="cod_condicion_venta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cod_condicion_venta"/>
 		<property name="com.jaspersoft.studio.field.label" value="cod_condicion_venta"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
 	</field>
 	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
 		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="condicion_venta"/>
 	</field>
 	<field name="cod_moneda" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cod_moneda"/>
 		<property name="com.jaspersoft.studio.field.label" value="cod_moneda"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
 	</field>
 	<field name="desc_moneda" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="desc_moneda"/>
 		<property name="com.jaspersoft.studio.field.label" value="desc_moneda"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="moneda"/>
 	</field>
 	<field name="total_comp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_comp"/>
 		<property name="com.jaspersoft.studio.field.label" value="total_comp"/>
 	</field>
 	<field name="total_iva10_comp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_iva10_comp"/>
 		<property name="com.jaspersoft.studio.field.label" value="total_iva10_comp"/>
 	</field>
 	<field name="total_gravada10_comp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_gravada10_comp"/>
 		<property name="com.jaspersoft.studio.field.label" value="total_gravada10_comp"/>
 	</field>
 	<field name="total_descuento_comp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_descuento_comp"/>
 		<property name="com.jaspersoft.studio.field.label" value="total_descuento_comp"/>
 	</field>
-	<variable name="total_gravada10_comp1" class="java.math.BigDecimal" resetType="Group" resetGroup="group_tipo_comp" calculation="Sum">
-		<variableExpression><![CDATA[$F{total_gravada10_comp}]]></variableExpression>
-	</variable>
-	<variable name="total_iva10_comp1" class="java.math.BigDecimal" resetType="Group" resetGroup="group_tipo_comp" calculation="Sum">
-		<variableExpression><![CDATA[$F{total_iva10_comp}]]></variableExpression>
-	</variable>
-	<variable name="total_comp1" class="java.math.BigDecimal" resetType="Group" resetGroup="group_tipo_comp" calculation="Sum">
-		<variableExpression><![CDATA[$F{total_comp}]]></variableExpression>
-	</variable>
 	<variable name="total_comp2" class="java.math.BigDecimal" resetType="Group" resetGroup="group_suc" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_comp}]]></variableExpression>
 	</variable>
@@ -130,18 +149,27 @@ ORDER BY 1,3,5,6,8,9]]>
 	<variable name="total_gravada10_comp2" class="java.math.BigDecimal" resetType="Group" resetGroup="group_suc" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_gravada10_comp}]]></variableExpression>
 	</variable>
-	<variable name="total_descuento_comp1" class="java.math.BigDecimal" resetType="Group" resetGroup="group_tipo_comp" calculation="Sum">
+	<variable name="total_descuento_comp2" class="java.math.BigDecimal" resetType="Group" resetGroup="group_suc" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_descuento_comp}]]></variableExpression>
 	</variable>
-	<variable name="total_descuento_comp2" class="java.math.BigDecimal" resetType="Group" resetGroup="group_suc" calculation="Sum">
+	<variable name="total_comp3" class="java.math.BigDecimal" resetType="Group" resetGroup="group_us" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_comp}]]></variableExpression>
+	</variable>
+	<variable name="total_gravada10_comp3" class="java.math.BigDecimal" resetType="Group" resetGroup="group_us" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_gravada10_comp}]]></variableExpression>
+	</variable>
+	<variable name="total_iva10_comp3" class="java.math.BigDecimal" resetType="Group" resetGroup="group_us" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_iva10_comp}]]></variableExpression>
+	</variable>
+	<variable name="total_descuento_comp3" class="java.math.BigDecimal" resetType="Group" resetGroup="group_us" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_descuento_comp}]]></variableExpression>
 	</variable>
 	<group name="group_suc">
 		<groupExpression><![CDATA[$F{cod_sucursal}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="18">
 				<textField>
-					<reportElement x="3" y="2" width="20" height="12" uuid="8744cc15-d2bd-4dc4-9553-cb1fc11024f9">
+					<reportElement x="3" y="2" width="15" height="12" uuid="8744cc15-d2bd-4dc4-9553-cb1fc11024f9">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -153,7 +181,7 @@ ORDER BY 1,3,5,6,8,9]]>
 					<textFieldExpression><![CDATA[$F{cod_sucursal}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="25" y="2" width="150" height="12" uuid="8d27df0d-a0f9-45b5-9000-d8217220d5fd">
+					<reportElement x="18" y="2" width="150" height="12" uuid="8d27df0d-a0f9-45b5-9000-d8217220d5fd">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -167,7 +195,7 @@ ORDER BY 1,3,5,6,8,9]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="19">
+			<band height="18">
 				<textField pattern="###,###.##">
 					<reportElement x="485" y="3" width="70" height="12" uuid="31a633cd-d137-4e64-9dfa-e41fa75ea17e">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -205,12 +233,14 @@ ORDER BY 1,3,5,6,8,9]]>
 					<textFieldExpression><![CDATA[$V{total_gravada10_comp2}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="288" y="0" width="266" height="1" uuid="c5fd615a-5e87-4b86-9732-8936989cf997">
+					<reportElement x="222" y="0" width="330" height="1" uuid="c5fd615a-5e87-4b86-9732-8936989cf997">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<staticText>
-					<reportElement x="194" y="3" width="70" height="12" uuid="7c51e2f1-c7ce-4a8c-a682-80b4013b22eb">
+					<reportElement x="221" y="3" width="70" height="12" uuid="7c51e2f1-c7ce-4a8c-a682-80b4013b22eb">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -231,39 +261,12 @@ ORDER BY 1,3,5,6,8,9]]>
 			</band>
 		</groupFooter>
 	</group>
-	<group name="group_tipo_comp">
-		<groupExpression><![CDATA[$F{tipo_comprobante}]]></groupExpression>
-		<groupHeader>
-			<band height="19">
-				<textField>
-					<reportElement x="27" y="3" width="150" height="12" uuid="5405b917-a29f-4d21-83b2-053c5680a6c5">
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{tipo_comprobante}]]></textFieldExpression>
-				</textField>
-				<line>
-					<reportElement x="0" y="-3" width="554" height="1" uuid="46219b3a-a608-48aa-95da-904516b4f558">
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
-				</line>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="4"/>
-		</groupFooter>
-	</group>
 	<group name="group_cliente">
 		<groupExpression><![CDATA[$F{cod_cliente}]]></groupExpression>
 		<groupHeader>
 			<band height="19">
 				<textField>
-					<reportElement x="52" y="3" width="20" height="12" uuid="2823d4da-2457-4262-8d56-a4223f7016db">
+					<reportElement x="18" y="3" width="20" height="12" uuid="2823d4da-2457-4262-8d56-a4223f7016db">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -275,7 +278,7 @@ ORDER BY 1,3,5,6,8,9]]>
 					<textFieldExpression><![CDATA[$F{cod_cliente}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="74" y="3" width="200" height="12" uuid="daf6413d-2105-4c8d-9aba-e12c8d8d720a">
+					<reportElement x="38" y="3" width="200" height="12" uuid="daf6413d-2105-4c8d-9aba-e12c8d8d720a">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -289,7 +292,88 @@ ORDER BY 1,3,5,6,8,9]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="3"/>
+			<band height="5"/>
+		</groupFooter>
+	</group>
+	<group name="group_us">
+		<groupExpression><![CDATA[$F{usuario}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<textField>
+					<reportElement x="65" y="1" width="100" height="12" uuid="4acad8a3-87a2-48a3-b961-763eefbd6f45">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="65" y="0" width="490" height="1" uuid="0b987d0a-3684-41c6-b721-6f797e0bc52f">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="19">
+				<textField pattern="###,###.##">
+					<reportElement x="490" y="3" width="60" height="12" uuid="e880a9cb-a80f-4be9-a193-4279a84833d7">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_comp3}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###.##">
+					<reportElement x="426" y="3" width="50" height="12" uuid="dacb343b-9b97-4e1f-97ce-793e37ccd99b">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_gravada10_comp3}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###.##">
+					<reportElement x="350" y="3" width="60" height="12" uuid="bc333ba4-a7df-4b0b-9fbb-c817c8b50a4b">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_iva10_comp3}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###.##">
+					<reportElement x="294" y="3" width="40" height="12" uuid="8ab0be74-ee82-4ee1-854d-026c4f295e1e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_descuento_comp3}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="127" y="0" width="425" height="1" uuid="1612bf0e-6d7f-41be-b4a2-c319e4fbf47f">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</line>
+			</band>
 		</groupFooter>
 	</group>
 	<background>
@@ -345,7 +429,7 @@ ORDER BY 1,3,5,6,8,9]]>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="3" y="3" width="40" height="12" uuid="2f7cd4af-86fa-4ea3-a31b-3bdd70ae6117">
+				<reportElement x="1" y="3" width="40" height="12" uuid="2f7cd4af-86fa-4ea3-a31b-3bdd70ae6117">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -357,7 +441,7 @@ ORDER BY 1,3,5,6,8,9]]>
 				<text><![CDATA[Sucursal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="131" y="3" width="60" height="12" uuid="6f28e392-e7e3-4dc2-88b7-ef165dce5125">
+				<reportElement x="128" y="3" width="60" height="12" uuid="6f28e392-e7e3-4dc2-88b7-ef165dce5125">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -368,7 +452,7 @@ ORDER BY 1,3,5,6,8,9]]>
 				<text><![CDATA[Comprobante]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="59" y="3" width="35" height="12" uuid="d466e93c-5923-4b97-9707-ef4fec87bd9f">
+				<reportElement x="44" y="3" width="35" height="12" uuid="d466e93c-5923-4b97-9707-ef4fec87bd9f">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -380,7 +464,7 @@ ORDER BY 1,3,5,6,8,9]]>
 				<text><![CDATA[Cliente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="224" y="3" width="30" height="12" uuid="76b18ba8-8871-4df0-a0ce-e67715cf9d6e">
+				<reportElement x="227" y="3" width="30" height="12" uuid="76b18ba8-8871-4df0-a0ce-e67715cf9d6e">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -391,7 +475,7 @@ ORDER BY 1,3,5,6,8,9]]>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="347" y="3" width="40" height="12" uuid="951ea04e-0952-470d-a4c2-6a7e532081c4">
+				<reportElement x="369" y="3" width="40" height="12" uuid="951ea04e-0952-470d-a4c2-6a7e532081c4">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -403,7 +487,7 @@ ORDER BY 1,3,5,6,8,9]]>
 				<text><![CDATA[Gravada]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="431" y="3" width="20" height="12" uuid="2f97402b-f8b3-469c-bbc2-fc0eda16c8f9">
+				<reportElement x="449" y="3" width="20" height="12" uuid="2f97402b-f8b3-469c-bbc2-fc0eda16c8f9">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -414,7 +498,7 @@ ORDER BY 1,3,5,6,8,9]]>
 				<text><![CDATA[Iva]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="496" y="3" width="50" height="12" uuid="beb615cc-1f0d-4cae-9136-e82f384b5b0b">
+				<reportElement x="503" y="3" width="50" height="12" uuid="beb615cc-1f0d-4cae-9136-e82f384b5b0b">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -428,7 +512,7 @@ ORDER BY 1,3,5,6,8,9]]>
 				<reportElement x="0" y="17" width="554" height="1" uuid="299c2075-b78d-43d1-b890-6e53481fc760"/>
 			</line>
 			<staticText>
-				<reportElement x="283" y="3" width="60" height="12" uuid="c937c92a-8ae1-46ce-ae23-eeb84a9deba0">
+				<reportElement x="289" y="3" width="60" height="12" uuid="c937c92a-8ae1-46ce-ae23-eeb84a9deba0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6afbfcbd-4920-48d2-a35f-e0cc0d3c427c"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -436,10 +520,22 @@ ORDER BY 1,3,5,6,8,9]]>
 				</textElement>
 				<text><![CDATA[Descuento]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="83" y="3" width="35" height="12" uuid="fea3bdd8-ade5-41c5-af29-65f98feae66a">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="33" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<textField pattern="###,###.##">
 				<reportElement x="490" y="3" width="60" height="12" uuid="77b8e350-bb62-4f3d-aedf-ac37801115d8">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -507,12 +603,12 @@ ORDER BY 1,3,5,6,8,9]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="3" splitType="Stretch"/>
+		<band height="6" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="7" splitType="Stretch"/>
+		<band height="6" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="2" splitType="Stretch"/>
+		<band height="4" splitType="Stretch"/>
 	</summary>
 </jasperReport>

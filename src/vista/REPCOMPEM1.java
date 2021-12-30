@@ -17,7 +17,6 @@ public class REPCOMPEM1 extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         cerrar_ventana();
-        carga_combobox();
     }
     public void cerrar_ventana() {
         setDefaultCloseOperation(REPCOMPEM1.DO_NOTHING_ON_CLOSE);
@@ -73,10 +72,10 @@ public class REPCOMPEM1 extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_ejecutar = new javax.swing.JButton();
-        cmb_tipo_comp = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         txt_fecha_comp_desde = new com.toedter.calendar.JDateChooser();
         txt_fecha_comp_hasta = new com.toedter.calendar.JDateChooser();
+        txt_cod_usuario = new javax.swing.JTextField();
 
         busqueda_sucursal.setTitle("Busqueda Sucursal");
         busqueda_sucursal.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -199,7 +198,7 @@ public class REPCOMPEM1 extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel6.setText("Tipo Comprob:");
+        jLabel6.setText("Usuario:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         txt_cod_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -234,15 +233,13 @@ public class REPCOMPEM1 extends javax.swing.JFrame {
         });
         jPanel2.add(btn_ejecutar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, 100, 30));
 
-        cmb_tipo_comp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(cmb_tipo_comp, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 190, -1));
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 153, 0));
         jLabel7.setText("Cod Cliente:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
         jPanel2.add(txt_fecha_comp_desde, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 150, 25));
         jPanel2.add(txt_fecha_comp_hasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 150, 25));
+        jPanel2.add(txt_cod_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 100, 25));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 520, 430));
 
@@ -315,7 +312,6 @@ public class REPCOMPEM1 extends javax.swing.JFrame {
     public javax.swing.JButton btn_suc;
     private javax.swing.JDialog busqueda_cliente;
     private javax.swing.JDialog busqueda_sucursal;
-    public javax.swing.JComboBox<String> cmb_tipo_comp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -337,6 +333,7 @@ public class REPCOMPEM1 extends javax.swing.JFrame {
     public javax.swing.JTextField txt_ci_ruc;
     public javax.swing.JTextField txt_cod_cliente;
     public javax.swing.JTextField txt_cod_sucursal;
+    public javax.swing.JTextField txt_cod_usuario;
     public javax.swing.JTextField txt_desc_cliente;
     public javax.swing.JTextField txt_desc_suc;
     public com.toedter.calendar.JDateChooser txt_fecha_comp_desde;
@@ -363,16 +360,5 @@ public void ventana_cliente(){
     public void cerrar_ventana_sucursal(){
         busqueda_sucursal.dispose();
     }
-
-    private void carga_combobox() {
-        Object tpd[] = new Object[3];
-        tpd[0] = "TODOS";
-        tpd[1] = "FACTURA CONTADO";
-        tpd[2] = "FACTURA CREDITO";
-        DefaultComboBoxModel dcb = new DefaultComboBoxModel(tpd);
-        this.cmb_tipo_comp.setModel(dcb);
-        //cmb_tipo_comprobante.addItem("Seleccione Opcion");
-        String std = "TODOS";
-        this.cmb_tipo_comp.setSelectedItem(std);
-    }
+    
 }

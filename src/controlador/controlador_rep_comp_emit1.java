@@ -67,12 +67,12 @@ public class controlador_rep_comp_emit1 extends REPCOMPEM1 implements ActionList
         if(e.getSource()== vistaRep_comp_em1.txt_cod_cliente){
             if (vistaRep_comp_em1.txt_cod_cliente.getText().equals("")) {
                 vistaRep_comp_em1.txt_desc_cliente.setText("TODOS");
-                vistaRep_comp_em1.cmb_tipo_comp.requestFocus();
+                vistaRep_comp_em1.txt_cod_usuario.requestFocus();
             }else{
                 String res = modeloCliente.retorna_desc_cliente(Integer.parseInt(vistaRep_comp_em1.txt_cod_cliente.getText()));
                 if(res!= null){
                     vistaRep_comp_em1.txt_desc_cliente.setText(res);
-                    vistaRep_comp_em1.cmb_tipo_comp.requestFocus();
+                    vistaRep_comp_em1.txt_cod_usuario.requestFocus();
                 }else {
                    vistaRep_comp_em1.txt_cod_cliente.setText("");
                    vistaRep_comp_em1.txt_desc_cliente.setText("");
@@ -153,7 +153,7 @@ public class controlador_rep_comp_emit1 extends REPCOMPEM1 implements ActionList
                 SimpleDateFormat formatofecha=new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     //String ruta_informe="src\\reportes\\rep_sal_cli1.jasper";//PARA WINDOWS
-                    String ruta_informe="src//reportes//REPCOMPEM1.jasper";//PARA LINUX
+                    String ruta_informe="src//reportes//REPCOMPEMI.jasper";//PARA LINUX
                     Map parametros = new HashMap();
                     if (vistaRep_comp_em1.txt_cod_sucursal.getText().equals("")) {
                         parametros.put("P_COD_SUCURSAL",null);
@@ -166,11 +166,11 @@ public class controlador_rep_comp_emit1 extends REPCOMPEM1 implements ActionList
                     } else {
                         parametros.put("P_COD_CLIENTE",Integer.parseInt(vistaRep_comp_em1.txt_cod_cliente.getText()));
                     }
-                    if (vistaRep_comp_em1.cmb_tipo_comp.getSelectedItem().equals("TODOS")) {
-                        parametros.put("P_TIPO_COMP",null);
+                    /*if (vistaRep_comp_em1.txt_cod_usuario.getText().equals("")) {
+                        parametros.put("P_COD_USUARIO",null);
                     } else {
-                        parametros.put("P_TIPO_COMP",vistaRep_comp_em1.cmb_tipo_comp.getSelectedItem());
-                    }
+                        parametros.put("P_COD_USUARIO",vistaRep_comp_em1.txt_cod_usuario.getText());
+                    }*/
                     //
                     Date fecha1,fecha2 = null;
                     String fec_mys1,fec_mys2 = null;

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REPCOMPEMI" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f06c8e92-9993-4184-a840-fc019aaa702a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="fact"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="P_COD_SUCURSAL" class="java.lang.String"/>
+	<parameter name="P_COD_CLIENTE" class="java.lang.Integer"/>
+	<parameter name="P_FECHA_COMP_DESDE" class="java.lang.String"/>
+	<parameter name="P_FECHA_COMP_HASTA" class="java.lang.String"/>
+	<parameter name="P_COD_USUARIO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT v.cod_sucursal,
+       v.desc_sucursal,
+       v.tipo_comprobante,
+       CONCAT(v.tip_comp,'-',v.ser_comprobante,'-',v.nro_comprobante) grupo_comp,
+       v.ser_comprobante,
+       v.nro_comprobante,
+       v.fecha_comprobante,
+       v.fec_comp,
+       v.usuario,
+       v.cod_cliente,
+       v.nombre_cliente,
+       v.cod_condicion_venta,
+       v.descripcion,
+       v.cod_moneda,
+       v.desc_moneda,
+       SUM(IFNULL(v.importe_total,0)) total_comp,
+       SUM(IFNULL(v.total_iva10,0)) total_iva10_comp,
+       SUM(IFNULL(v.gravada_10,0)) total_gravada10_comp,
+       SUM(IFNULL(v.descuento_importe,0)) total_descuento_comp
+FROM view_comprob_venta_cab_det v
+WHERE (v.cod_sucursal= $P{P_COD_SUCURSAL}  OR $P{P_COD_SUCURSAL}  IS NULL)
+       AND (v.cod_cliente= $P{P_COD_CLIENTE}  OR $P{P_COD_CLIENTE} IS NULL)
+       AND ((v.fec_comp >= $P{P_FECHA_COMP_DESDE} OR $P{P_FECHA_COMP_DESDE} IS NULL) AND (v.fec_comp <= $P{P_FECHA_COMP_HASTA} OR $P{P_FECHA_COMP_HASTA} IS NULL))
+       AND (v.usuario= $P{P_COD_USUARIO}  OR $P{P_COD_USUARIO} IS NULL)
+GROUP BY v.cod_sucursal,
+	v.desc_sucursal,
+	v.tipo_comprobante,
+	v.ser_comprobante,
+	v.nro_comprobante,
+	v.fecha_comprobante,
+	v.fec_comp,
+	v.usuario,
+	v.cod_cliente,
+	v.nombre_cliente,
+	v.cod_condicion_venta,
+	v.descripcion,
+	v.cod_moneda,
+	v.desc_moneda
+ORDER BY 1,10,9,8,4]]>
+	</queryString>
+	<field name="cod_sucursal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cod_sucursal"/>
+		<property name="com.jaspersoft.studio.field.label" value="cod_sucursal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="desc_sucursal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="desc_sucursal"/>
+		<property name="com.jaspersoft.studio.field.label" value="desc_sucursal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sucursal"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_comprobante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo_comprobante"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo_comprobante"/>
+	</field>
+	<field name="grupo_comp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="grupo_comp"/>
+		<property name="com.jaspersoft.studio.field.label" value="grupo_comp"/>
+	</field>
+	<field name="ser_comprobante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ser_comprobante"/>
+		<property name="com.jaspersoft.studio.field.label" value="ser_comprobante"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nro_comprobante" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nro_comprobante"/>
+		<property name="com.jaspersoft.studio.field.label" value="nro_comprobante"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_comprobante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_comprobante"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_comprobante"/>
+	</field>
+	<field name="fec_comp" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fec_comp"/>
+		<property name="com.jaspersoft.studio.field.label" value="fec_comp"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
+	</field>
+	<field name="usuario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="usuario"/>
+		<property name="com.jaspersoft.studio.field.label" value="usuario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
+	</field>
+	<field name="cod_cliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cod_cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="cod_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="persona"/>
+	</field>
+	<field name="cod_condicion_venta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cod_condicion_venta"/>
+		<property name="com.jaspersoft.studio.field.label" value="cod_condicion_venta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="condicion_venta"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_moneda" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cod_moneda"/>
+		<property name="com.jaspersoft.studio.field.label" value="cod_moneda"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comprobante_cabecera_venta"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="desc_moneda" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="desc_moneda"/>
+		<property name="com.jaspersoft.studio.field.label" value="desc_moneda"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="moneda"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_comp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_comp"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_comp"/>
+	</field>
+	<field name="total_iva10_comp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_iva10_comp"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_iva10_comp"/>
+	</field>
+	<field name="total_gravada10_comp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_gravada10_comp"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_gravada10_comp"/>
+	</field>
+	<field name="total_descuento_comp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_descuento_comp"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_descuento_comp"/>
+	</field>
+	<group name="GroupSuc">
+		<groupExpression><![CDATA[$F{cod_sucursal}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="20" y="1" width="20" height="12" uuid="dc07a3f8-b97e-4715-83d4-2a2c46dac6f7">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cod_sucursal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="41" y="1" width="200" height="12" uuid="531edf46-05bd-4837-b6c8-a6ff1e6bb42e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{desc_sucursal}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22"/>
+		</groupFooter>
+	</group>
+	<group name="GroupCli">
+		<groupExpression><![CDATA[$F{cod_cliente}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<textField>
+					<reportElement x="43" y="2" width="20" height="12" uuid="0dc1ab5f-3cac-4699-8d48-870f18d26bae">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cod_cliente}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="65" y="2" width="200" height="12" uuid="8a0bdd36-4fff-452c-9dd4-19d715a3d7ca">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_cliente}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21"/>
+		</groupFooter>
+	</group>
+	<group name="GroupUs">
+		<groupExpression><![CDATA[$F{usuario}]]></groupExpression>
+		<groupHeader>
+			<band height="23">
+				<textField>
+					<reportElement x="91" y="2" width="100" height="12" uuid="b16a2625-7fc6-410b-8ae3-879561952f08">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="16"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="26" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
